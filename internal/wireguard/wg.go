@@ -47,7 +47,7 @@ func Create(apiClient *api.Client, org *api.Organization, regionCode, name strin
 	ctx := context.TODO()
 	var (
 		err error
-		rx  = regexp.MustCompile(`^[a-zA-Z0-9\\-]+$`)
+		rx  = regexp.MustCompile(`^[a-zA-Z0-9\\-_]+$`)
 	)
 
 	if name == "" {
@@ -57,7 +57,7 @@ func Create(apiClient *api.Client, org *api.Organization, regionCode, name strin
 		}
 		host, _ := os.Hostname()
 
-		cleanEmailPattern := regexp.MustCompile(`[^a-zA-Z0-9\\-_]`)
+		cleanEmailPattern := regexp.MustCompile(`[^a-zA-Z0-9\\-]`)
 		name = fmt.Sprintf("interactive-%s-%s-%d",
 			strings.Split(host, ".")[0],
 			cleanEmailPattern.ReplaceAllString(user.Email, "-"), badrand.Intn(1000))
