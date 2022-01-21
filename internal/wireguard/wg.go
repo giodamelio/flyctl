@@ -57,7 +57,7 @@ func Create(apiClient *api.Client, org *api.Organization, regionCode, name strin
 		}
 		host, _ := os.Hostname()
 
-		cleanEmailPattern := regexp.MustCompile(`[^a-zA-Z0-9\\-]`)
+		cleanEmailPattern := regexp.MustCompile(`[^a-zA-Z0-9\\-_]`)
 		name = fmt.Sprintf("interactive-%s-%s-%d",
 			strings.Split(host, ".")[0],
 			cleanEmailPattern.ReplaceAllString(user.Email, "-"), badrand.Intn(1000))
@@ -76,7 +76,7 @@ func Create(apiClient *api.Client, org *api.Organization, regionCode, name strin
 	}
 
 	if !rx.MatchString(name) {
-		return nil, errors.New("name must consist solely of letters, numbers, and the dash character")
+		return nil, errors.New("name must consist solely of letters, numbers, and the underscore or dash characters")
 	}
 
 	fmt.Printf("Creating WireGuard peer \"%s\" in region \"%s\" for organization %s\n", name, regionCode, org.Slug)
